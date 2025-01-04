@@ -1,7 +1,6 @@
-from sqlalchemy import  Column, Integer, String, DateTime, ForeignKey, Enum
+from sqlalchemy import  Column, Integer, String, DateTime, ForeignKey, Float
 from sqlalchemy.sql import func
 from sqlalchemy.orm import declarative_mixin
-from src.models.enums import UserOrganizationRole
 
 from src.core.dbutils import Base
 
@@ -21,6 +20,7 @@ class User(Timestamp, Base):
 
 class Organization(Timestamp, Base):
     __tablename__ = "organizations"
+
     organization_id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
     invite_code = Column(String, nullable=False, unique=True)
@@ -28,7 +28,24 @@ class Organization(Timestamp, Base):
 
 class UserOrganization(Timestamp, Base):
     __tablename__ = "user_organizations"
+
     user_organization_id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
     organization_id = Column(Integer, ForeignKey("organizations.organization_id"), nullable=False)
     role = Column(Integer, nullable=False)
+
+
+class Cluster(Timestamp, Base):
+    __tablename__ = "clusters"
+    
+    cluster_id = Column(Integer, primary_key=True, index=True)
+    organization_id = Column(Integer, ForeignKey("organizations.organization_id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+    name = Column(String, nullable=False)
+    total_ram = Column(Integer, nullable=False)
+    total_cpu = Column(Integer, nullable=False)
+    total_gpu = Column(Integer, nullable=False)
+    available_ram = Column(Integer, nullable=False)
+    available_cpu = Column(Integer, nullable=False)
+    available_gpu = Column(Integer, nullable=False)
+    

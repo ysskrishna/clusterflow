@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 
 from src.routers.user import router as user_router
 from src.routers.organization import router as organization_router
+from src.routers.cluster import router as cluster_router
 
 from src.core.dbutils import engine, Base
 
@@ -11,7 +12,7 @@ app = FastAPI()
 
 app.include_router(user_router, prefix="/api/user", tags=["user authentication"])
 app.include_router(organization_router, prefix="/api/organization", tags=["organization"])
-
+app.include_router(cluster_router, prefix="/api/cluster", tags=["cluster"])
 
 
 @app.get("/", response_class=HTMLResponse)
