@@ -257,6 +257,3 @@ $RECYCLE.BIN/
 venv/
 unused/
 notes.md
-.env.development
-.env.local
-.env
