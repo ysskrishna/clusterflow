@@ -63,3 +63,8 @@ The server will be available at `http://localhost:8081/`
 ### API Documentation
 
 Access the Swagger UI documentation at `http://localhost:8081/docs`
+
+
+## Database Diagram
+
+![DB Diagram](./media/DBdiagram.png)
