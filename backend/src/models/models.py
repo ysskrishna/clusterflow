@@ -1,4 +1,4 @@
-from sqlalchemy import  Column, Integer, String, DateTime, ForeignKey, Float
+from sqlalchemy import  Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import declarative_mixin
 
@@ -48,13 +48,14 @@ class Cluster(Timestamp, Base):
     available_ram = Column(Integer, nullable=False)
     available_cpu = Column(Integer, nullable=False)
     available_gpu = Column(Integer, nullable=False)
-    
 
+    
 class Deployment(Base):
     __tablename__ = "deployments"
 
     deployment_id = Column(Integer, primary_key=True, index=True)
     cluster_id = Column(Integer, ForeignKey("clusters.cluster_id"), nullable=False)
+    organization_id = Column(Integer, ForeignKey("organizations.organization_id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
     docker_image_path = Column(String, nullable=False)
     required_ram = Column(Integer, nullable=False)
@@ -62,3 +63,6 @@ class Deployment(Base):
     required_gpu = Column(Integer, nullable=False)
     priority = Column(Integer, nullable=False)
     status = Column(Integer, nullable=False)
+    queued_at = Column(DateTime, nullable=True)
+    terminated_at = Column(DateTime, nullable=True)
+    terminated_by_user_id = Column(Integer, nullable=True)

@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from src.routers.user import router as user_router
 from src.routers.organization import router as organization_router
 from src.routers.cluster import router as cluster_router
-from src.routers.deployments import router as deployments_router
+from src.routers.deployment import router as deployment_router
 from src.seed import add_seed_data_if_empty, drop_all_tables, create_tables_if_not_exists
 
 app = FastAPI()
@@ -12,7 +12,7 @@ app = FastAPI()
 app.include_router(user_router, prefix="/api/user", tags=["user"])
 app.include_router(organization_router, prefix="/api/organization", tags=["organization"])
 app.include_router(cluster_router, prefix="/api/cluster", tags=["cluster"])
-app.include_router(deployments_router, prefix="/api/deployments", tags=["deployments"])
+app.include_router(deployment_router, prefix="/api/deployment", tags=["deployment"])
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -31,7 +31,7 @@ async def serve_index():
 # Create Database Tables
 @app.on_event("startup")
 async def init_db():
-    drop_tables = True # Make it true to drop all tables. It will reset the database with initial data
+    drop_tables = False # Make it true to drop all tables. It will reset the database with initial data
 
     if drop_tables:
         await drop_all_tables()

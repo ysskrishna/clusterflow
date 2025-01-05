@@ -15,13 +15,13 @@ async def create_organization(org: schemas.OrganizationCreate, user: User = Depe
     invite_code = f"ORG-{uuid.uuid4()}"
     new_org = Organization(name=org.name, invite_code=invite_code)
     db.add(new_org)
-    await db.flush()
+    await db.commit()
+    await db.refresh(new_org)
     
     user_org = UserOrganization(user_id=user.user_id, organization_id=new_org.organization_id, role=UserOrganizationRole.OWNER)
     db.add(user_org)
     await db.commit()
-    await db.refresh(new_org)
-    return new_org
+    return {"message":"Organization created successfully", "result":new_org}
 
 
 @router.post("/join")
@@ -40,7 +40,7 @@ async def join_organization(org_join: schemas.OrganizationJoin, user: User = Dep
     user_org = UserOrganization(user_id=user.user_id, organization_id=org.organization_id, role=UserOrganizationRole.MEMBER)
     db.add(user_org)
     await db.commit()
-    return {"message": "User joined organization successfully"}
+    return {"message":"User joined organization successfully"}
 
 
 @router.get("/{organization_id}")
@@ -49,7 +49,7 @@ async def get_organization(organization_id: int, user: User = Depends(get_curren
     org = result.scalar_one_or_none()
     if not org:
         raise HTTPException(status_code=404, detail="Organization not found")
-    return org
+    return {"message":"Organization fetched successfully", "result":org}
 
 @router.get("/{organization_id}/users")
 async def get_organization_users(organization_id: int, user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
@@ -61,5 +61,5 @@ async def get_organization_users(organization_id: int, user: User = Depends(get_
     
     result = await db.execute(select(UserOrganization).where(UserOrganization.organization_id == organization_id))
     users = result.scalars().all()
-    return users
+    return {"message":"Users fetched successfully", "result":users}
 

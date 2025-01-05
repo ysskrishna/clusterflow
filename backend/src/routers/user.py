@@ -22,7 +22,7 @@ async def signup(user: schemas.UserCreate, db: AsyncSession = Depends(get_db)):
     new_user = User(username=user.username, password=hashed_password)
     db.add(new_user)
     await db.commit()
-    return {"message": "User created successfully"}
+    return {"message":"User created successfully"}
 
 @router.post("/login")
 async def login(user: schemas.UserCreate, db: AsyncSession = Depends(get_db)):
@@ -32,4 +32,4 @@ async def login(user: schemas.UserCreate, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     token = create_access_token({"user_id": db_user.user_id})
-    return {"access_token": token, "token_type": "bearer"}
+    return {"message":"User logged in successfully", "result":{"access_token": token, "token_type": "bearer"}}

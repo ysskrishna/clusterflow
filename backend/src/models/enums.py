@@ -6,5 +6,6 @@ class UserOrganizationRole(int, Enum):
     MEMBER = 2
 
 class DeploymentStatus(int, Enum):
-    PENDING = 1
-    COMPLETED = 2
+    LIVE = 1
+    TERMINATED = 2
+    QUEUED = 3

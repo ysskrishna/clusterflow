@@ -31,7 +31,7 @@ async def create_cluster(cluster: schemas.ClusterCreate, user: User = Depends(ge
     db.add(new_cluster)
     await db.commit()
     await db.refresh(new_cluster)
-    return new_cluster
+    return {"message":"Cluster created successfully", "result":new_cluster}
 
 @router.get("/{cluster_id}")
 async def get_cluster(cluster_id: int, user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
@@ -46,4 +46,4 @@ async def get_cluster(cluster_id: int, user: User = Depends(get_current_user), d
     if not user_org:
         raise HTTPException(status_code=403, detail="User does not have access to this cluster")
     
-    return cluster
+    return {"message":"Cluster fetched successfully", "result":cluster}
