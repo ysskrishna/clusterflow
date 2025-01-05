@@ -37,7 +37,7 @@ class UserOrganization(Timestamp, Base):
 
 class Cluster(Timestamp, Base):
     __tablename__ = "clusters"
-    
+
     cluster_id = Column(Integer, primary_key=True, index=True)
     organization_id = Column(Integer, ForeignKey("organizations.organization_id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
@@ -49,3 +49,16 @@ class Cluster(Timestamp, Base):
     available_cpu = Column(Integer, nullable=False)
     available_gpu = Column(Integer, nullable=False)
     
+
+class Deployment(Base):
+    __tablename__ = "deployments"
+
+    deployment_id = Column(Integer, primary_key=True, index=True)
+    cluster_id = Column(Integer, ForeignKey("clusters.cluster_id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+    docker_image_path = Column(String, nullable=False)
+    required_ram = Column(Integer, nullable=False)
+    required_cpu = Column(Integer, nullable=False)
+    required_gpu = Column(Integer, nullable=False)
+    priority = Column(Integer, nullable=False)
+    status = Column(Integer, nullable=False)

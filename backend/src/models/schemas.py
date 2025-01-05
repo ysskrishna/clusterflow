@@ -16,3 +16,12 @@ class ClusterCreate(BaseModel):
     total_cpu: int
     total_gpu: int
     organization_id: int
+
+
+class DeploymentCreate(BaseModel):
+    cluster_id: int
+    docker_image_path: str
+    required_ram: int
+    required_cpu: int
+    required_gpu: int
+    priority: int
