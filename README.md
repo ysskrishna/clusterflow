@@ -12,57 +12,28 @@
 
 ## Prerequisites
 
-- Python 3.12+
+- Python 3.10+
 - pip
 - virtualenv
 - docker
 
 
 
-## Initial Setup
-
-1. Run Redis as docker container
+## Running the backend service
 ```
-docker-compose up -f docker-compose.yml
+docker compose  -f docker-compose.yml up --build
 ```
 
-
-2. Virtual Environment Setup
-    - Create a virtual environment:
-    ```
-    cd backend
-    virtualenv venv
-    ```
-
-    - Activate the virtual environment:
-        - On Windows:
-            ```
-            .\venv\Scripts\activate
-            ```
-        - On macOS and Linux:
-            ```
-            source venv/bin/activate
-            ```
-
-    - Install dependencies:
-    ```
-    pip install -r requirements.txt
-    ```
-
-
-### Running the Development Server
-
-Start the FastAPI server:
-```
-cd backend
-python main.py
-```
 
 The server will be available at `http://localhost:8081/`
 
 ### API Documentation
 
 Access the Swagger UI documentation at `http://localhost:8081/docs`
+![Swagger UI](./media/swagger.png)
+
+## Postman v2.1 collection file
+`ClusterFlow_postman_2_1.postman_collection.json`
 
 
 ## Database Diagram
