@@ -5,8 +5,7 @@ from src.routers.user import router as user_router
 from src.routers.organization import router as organization_router
 from src.routers.cluster import router as cluster_router
 from src.routers.deployments import router as deployments_router
-from src.core.dbutils import engine, Base
-from src.seed import seed_data
+from src.seed import add_seed_data_if_empty, drop_all_tables, create_tables_if_not_exists
 
 app = FastAPI()
 
@@ -32,22 +31,16 @@ async def serve_index():
 # Create Database Tables
 @app.on_event("startup")
 async def init_db():
-    drop_tables = False # Make it true to drop all tables and reset the database with initial data
+    drop_tables = True # Make it true to drop all tables. It will reset the database with initial data
 
     if drop_tables:
-        # Drop all tables
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.drop_all)
-        print("#########################")
-        print("All tables dropped.")
-        print("#########################")
+        await drop_all_tables()
 
-    # Create all tables if it doesn't exist
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # Create all tables if they don't exist
+    await create_tables_if_not_exists()
 
     # Seed the database if database is empty
-    await seed_data()
+    await add_seed_data_if_empty()
 
 
 if __name__ == '__main__':

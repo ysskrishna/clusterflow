@@ -3,9 +3,24 @@ from src.models.models import User, Organization, UserOrganization, Cluster, Dep
 from src.models.enums import UserOrganizationRole
 from src.core.dbutils import SessionLocal
 from sqlalchemy.sql import text
+from src.core.dbutils import engine, Base
 
 
-async def seed_data():
+async def drop_all_tables():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+    print("#########################")
+    print("All tables dropped.")
+    print("#########################")
+
+async def create_tables_if_not_exists():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    print("#########################")
+    print("All tables created.")
+    print("#########################")
+
+async def add_seed_data_if_empty():
     async with SessionLocal() as db:
         # Check if there are already users in the database
         result = await db.execute(text("SELECT COUNT(*) FROM users"))
