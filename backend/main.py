@@ -28,7 +28,7 @@ async def serve_index():
     </html>
     """
 
-# Create Database Tables
+
 @app.on_event("startup")
 async def init_db():
     drop_tables = False # Make it true to drop all tables. It will reset the database with initial data
@@ -41,6 +41,14 @@ async def init_db():
 
     # Seed the database if database is empty
     await add_seed_data_if_empty()
+
+
+    # Start scheduler in background
+    from src.schedulers.deployments import schedule_cluster_deployments
+    import asyncio
+    import threading
+    scheduler_thread = threading.Thread(target=lambda: asyncio.run(schedule_cluster_deployments()), daemon=True)
+    scheduler_thread.start()
 
 
 if __name__ == '__main__':

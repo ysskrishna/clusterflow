@@ -63,6 +63,3 @@ class Deployment(Base):
     required_gpu = Column(Integer, nullable=False)
     priority = Column(Integer, nullable=False)
     status = Column(Integer, nullable=False)
-    queued_at = Column(DateTime, nullable=True)
-    terminated_at = Column(DateTime, nullable=True)
-    terminated_by_user_id = Column(Integer, nullable=True)
