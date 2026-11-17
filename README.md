@@ -1,6 +1,6 @@
 # Clusterflow
 
-[![License: MIT](https://img.shields.io/github/license/ysskrishna/clusterflow)](https://github.com/ysskrishna/clusterflow/blob/main/LICENSE) [![Author site](https://img.shields.io/badge/author-ysskrishna.space-informational)](https://ysskrishna.space)
+[![Author site](https://img.shields.io/badge/author-ysskrishna.space-informational)](https://ysskrishna.space)
 
 ## Hypervisor-like Service for MLOps Platform
 
@@ -57,10 +57,6 @@ If you find this project helpful:
 - 🐛 [Report issues](https://github.com/ysskrishna/clusterflow/issues)
 - 🔀 Submit pull requests
 - 💝 [Sponsor on GitHub](https://github.com/sponsors/ysskrishna)
-
-## License
-
-MIT © [Y. Siva Sai Krishna](https://github.com/ysskrishna) — see [LICENSE](LICENSE) for details.
 
 ---
 
